@@ -56,4 +56,16 @@ describe("Curry", () => {
   it("should curring a function with a reverse partial application", () => {
     expect(curry((a,b,c,d,e) => a+b+c+d+e)(1)(1,1,1,1)).toBe(5);
   });
+
+  it("should return an immutable function", () => {
+    const sub = (a,b)=>a-b;
+
+    const curriedSub = curry(sub);
+
+    // force multiple calls
+    [1,2,3,4,5,6,7,8,9,10].map(curriedSub)
+
+    expect(typeof curriedSub(1)).toBe('function');
+    expect(curriedSub(3)(1)).toBe(2);
+  });
 });

@@ -1,13 +1,13 @@
 
 module.exports = function(fn) {
-  let partiallyApplied = [];
-  return function curry(...args){
-    if (partiallyApplied.concat(args).length >= fn.length) {
-      args = partiallyApplied.concat(args);
-      return fn(...args);
-    } else {
-      partiallyApplied = partiallyApplied.concat(args);
-      return curry;
-    }
-  };
+  return (function curry(...prev) {
+    return function(...args) {
+      args = prev.concat(args);
+      if (args.length >= fn.length) {
+        return fn(...args);
+      } else {
+        return curry(...args);
+      }
+    };
+  })();
 };
